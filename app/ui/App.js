@@ -8,11 +8,13 @@ import React from 'react';
 import { View, StyleSheet, SafeAreaView } from 'react-native';
 
 import Title from './Title';
+import Footer from './Footer';
 
 const App = () => (
   <SafeAreaView style={styles.container}>
     <Title>Todo List</Title>
     <View style={styles.dummy} />
+    <Footer />
   </SafeAreaView>
 );
 
