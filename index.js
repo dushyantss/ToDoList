@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import Reactotron from 'reactotron-react-native';
 import { reactotronRedux } from 'reactotron-redux';
 import reducer from './app/data/redux/reducer';
-import App from './app/App';
+import App from './app/ui/App';
 
 function configureStore() {
   if (process.env.NODE_ENV) {

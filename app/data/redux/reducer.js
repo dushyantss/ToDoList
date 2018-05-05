@@ -1,14 +1,4 @@
-export const actionTypes = {
-  ADD: 'ADD',
-  REMOVE: 'REMOVE',
-  REMOVE_COMPLETED: 'REMOVE_COMPLETED',
-};
-
-export const actionCreators = {
-  add: item => ({ type: actionTypes.ADD, payload: item }),
-  remove: item => ({ type: actionTypes.REMOVE, payload: item }),
-  removeCompleted: () => ({ type: actionTypes.REMOVE_COMPLETED, payload: null }),
-};
+import { actionTypes } from './actions';
 
 const initialState = { todos: [] };
 
