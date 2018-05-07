@@ -9,10 +9,12 @@ import { View, StyleSheet, SafeAreaView } from 'react-native';
 
 import Title from './Title';
 import Footer from './Footer';
+import Input from './Input';
 
 const App = () => (
   <SafeAreaView style={styles.container}>
     <Title>Todo List</Title>
+    <Input />
     <View style={styles.dummy} />
     <Footer />
   </SafeAreaView>
@@ -24,7 +26,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'stretch',
     backgroundColor: '#F5FCFF',
   },
   dummy: {

@@ -4,7 +4,6 @@ import { StyleSheet, Text } from 'react-native';
 
 const styles = StyleSheet.create({
   title: {
-    alignSelf: 'stretch',
     color: 'white',
     backgroundColor: 'skyblue',
     textAlign: 'center',

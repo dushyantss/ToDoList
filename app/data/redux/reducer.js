@@ -4,9 +4,17 @@ const initialState = { todos: [] };
 
 function todosReducer(state = initialState.todos, action) {
   const { type, payload } = action;
+  let newId;
+  const lastItem = state[state.length - 1];
+  if (lastItem) {
+    newId = lastItem.id + 1;
+  } else {
+    newId = 0;
+  }
+
   switch (type) {
     case actionTypes.ADD: {
-      return [...state, { id: payload.id, text: payload.text, isCompleted: payload.isCompleted }];
+      return [...state, { id: newId, text: payload, isCompleted: false }];
     }
     case actionTypes.REMOVE: {
       return state.filter(item => item.id !== payload.id);

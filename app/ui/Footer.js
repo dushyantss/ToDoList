@@ -6,7 +6,6 @@ import { removeCompleted } from '../data/redux/actions';
 
 const styles = StyleSheet.create({
   footer: {
-    alignSelf: 'stretch',
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderColor: 'rgb(204,204,204)',
