@@ -22,6 +22,16 @@ function todosReducer(state = initialState.todos, action) {
     case actionTypes.REMOVE_COMPLETED: {
       return state.filter(item => !item.isCompleted);
     }
+    case actionTypes.TOGGLE_COMPLETED: {
+      return state.map((item) => {
+        if (item.id === payload.id) {
+          const newItem = { ...item }; // Copy into new item
+          newItem.isCompleted = !item.isCompleted;
+          return newItem;
+        }
+        return item;
+      });
+    }
     default: {
       return state;
     }
