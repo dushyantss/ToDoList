@@ -1,8 +1,11 @@
+import { AsyncStorage } from 'react-native';
 import { actionTypes } from './actions';
 
-const initialState = { todos: [] };
+export const storageKeys = {
+  state: 'state',
+};
 
-function todosReducer(state = initialState.todos, action) {
+function todosReducer(state, action) {
   const { type, payload } = action;
   let newId;
   const lastItem = state[state.length - 1];
@@ -38,8 +41,12 @@ function todosReducer(state = initialState.todos, action) {
   }
 }
 
-export default function reducer(state = initialState, action) {
-  return {
+export default function reducer(state, action) {
+  const newState = {
     todos: todosReducer(state.todos, action),
   };
+
+  AsyncStorage.setItem(storageKeys.state, JSON.stringify(newState));
+
+  return newState;
 }

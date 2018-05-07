@@ -1,36 +1,55 @@
 import React from 'react';
-import { AppRegistry } from 'react-native';
+import { AppRegistry, AsyncStorage } from 'react-native';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import Reactotron from 'reactotron-react-native';
 import { reactotronRedux } from 'reactotron-redux';
-import reducer from './app/data/redux/reducer';
+import reducer, { storageKeys } from './app/data/redux/reducer';
 import App from './app/ui/App';
 
-function configureStore() {
-  if (process.env.NODE_ENV) {
-    // Add Reactotron
-    Reactotron
-      .configure({
-        name: 'Todo List',
-      })
-      .useReactNative()
-      .use(reactotronRedux()) // add reactotron redux
-      .connect(); // let's connect!
+function setup(initialState) {
+  function configureStore() {
+    if (process.env.NODE_ENV === 'development') {
+      // Add Reactotron
+      Reactotron
+        .configure({
+          name: 'Todo List',
+        })
+        .useReactNative()
+        .use(reactotronRedux()) // add reactotron redux
+        .connect(); // let's connect!
 
-    return Reactotron.createStore(reducer, {}, compose(applyMiddleware()));
+      return Reactotron.createStore(reducer, initialState, compose(applyMiddleware()));
+    }
+    return createStore(reducer, initialState);
   }
-  return createStore(reducer);
+
+  const store = configureStore();
+
+  const AppWithStore = () => (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+
+  Reactotron.log('Stupid thing does not work with createStore(reducer), needs 3 arguments');
+
+  AppRegistry.registerComponent('ToDoList', () => AppWithStore);
 }
 
-const store = configureStore();
+function startWithInitialState() {
+  let initialState = { todos: [] };
+  try {
+    AsyncStorage.getItem(storageKeys.state).then((value) => {
+      initialState = JSON.parse(value);
+      setup(initialState);
+    });
+  } catch (e) {
+    console.log('====================================');
+    console.log('Could not load initial data');
+    console.log('====================================');
+    setup(initialState);
+  }
+}
 
-const AppWithStore = () => (
-  <Provider store={store}>
-    <App />
-  </Provider>
-);
-
-Reactotron.log('Stupid thing does not work with createStore(reducer), needs 3 arguments');
-
-AppRegistry.registerComponent('ToDoList', () => AppWithStore);
+startWithInitialState();
