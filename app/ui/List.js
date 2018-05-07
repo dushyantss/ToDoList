@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FlatList, StyleSheet } from 'react-native';
-import Reactotron from 'reactotron-react-native';
 
 import ListItem from './ListItem';
 
@@ -22,8 +21,6 @@ const List = ({ todos, onRemovePressed, toggleCompleted }) => {
   renderItem.propTypes = {
     item: PropTypes.shape().isRequired,
   };
-
-  Reactotron.log(`todos ${todos}`);
 
   return (
     <FlatList

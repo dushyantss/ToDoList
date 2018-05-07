@@ -1,4 +1,5 @@
 import { AsyncStorage } from 'react-native';
+import Reactotron from 'reactotron-react-native';
 import { actionTypes } from './actions';
 
 export const storageKeys = {
@@ -16,6 +17,12 @@ function todosReducer(state, action) {
   }
 
   switch (type) {
+    case actionTypes.INITIAL_DATA: {
+      if (action.payload.initialDataFetched.fetched) {
+        return action.payload.todos;
+      }
+      return state;
+    }
     case actionTypes.ADD: {
       return [...state, { id: newId, text: payload, isCompleted: false }];
     }
@@ -41,12 +48,22 @@ function todosReducer(state, action) {
   }
 }
 
+function initialDataFetchedReducer(state, action) {
+  if (action.type === actionTypes.INITIAL_DATA) {
+    return action.payload.initialDataFetched;
+  }
+  return state;
+}
+
 export default function reducer(state, action) {
   const newState = {
     todos: todosReducer(state.todos, action),
+    initialDataFetched: initialDataFetchedReducer(state.initialDataFetched, action),
   };
-
-  AsyncStorage.setItem(storageKeys.state, JSON.stringify(newState));
+  Reactotron.log(state);
+  if (state.initialDataFetched.fetched) {
+    AsyncStorage.setItem(storageKeys.state, JSON.stringify(newState));
+  }
 
   return newState;
 }
