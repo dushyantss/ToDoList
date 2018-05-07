@@ -1,15 +1,42 @@
 import React from 'react';
-import { View, Text, Switch, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 
-const ListItem = ({ item, onRemovePressed, onValueChange }) => {
+import CheckBox from './CheckBox';
+import closeIcon from '../../resources/icons/ic_close.png';
+
+const styles = StyleSheet.create({
+  item: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginStart: 16,
+    marginEnd: 16,
+    marginBottom: 16,
+  },
+  text: {
+    flex: 1,
+    fontSize: 16,
+  },
+  image: {
+    width: 16,
+    height: 16,
+    padding: 8,
+    marginStart: 16,
+    marginEnd: 16,
+  },
+});
+
+const ListItem = ({ item, onRemovePressed, toggleCompleted }) => {
+  this.toggleCompleted = () => toggleCompleted(item);
+  this.onRemovePressed = () => onRemovePressed(item);
+
   const { text, isCompleted } = item;
   return (
-    <View>
-      <Text>{text}</Text>
-      <Switch value={isCompleted} onValueChange={onValueChange(item)} />
-      <TouchableOpacity onPress={onRemovePressed(item)}>
-        <Image source={{ uri: '../../resources/icons/ic_close.png' }} />
+    <View style={styles.item}>
+      <Text style={styles.text}>{text}</Text>
+      <CheckBox checked={isCompleted} onPress={this.toggleCompleted} />
+      <TouchableOpacity onPress={this.onRemovePressed}>
+        <Image style={styles.image} source={closeIcon} />
       </TouchableOpacity>
     </View>
   );
@@ -17,7 +44,7 @@ const ListItem = ({ item, onRemovePressed, onValueChange }) => {
 ListItem.propTypes = {
   item: PropTypes.shape().isRequired,
   onRemovePressed: PropTypes.func.isRequired,
-  onValueChange: PropTypes.func.isRequired,
+  toggleCompleted: PropTypes.func.isRequired,
 };
 
 export default ListItem;
