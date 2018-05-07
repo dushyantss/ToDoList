@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ScrollView, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
+import Reactotron from 'reactotron-react-native';
 
 import ListItem from './ListItem';
 
@@ -10,18 +11,29 @@ const styles = StyleSheet.create({
   },
 });
 
-const List = ({ todos, onRemovePressed, toggleCompleted }) => (
-  <ScrollView style={styles.list}>
-    {todos.map(item => (
-      <ListItem
-        key={item.id}
-        item={item}
-        onRemovePressed={onRemovePressed}
-        toggleCompleted={toggleCompleted}
-      />
-    ))}
-  </ScrollView>
-);
+const List = ({ todos, onRemovePressed, toggleCompleted }) => {
+  const renderItem = ({ item }) => (
+    <ListItem
+      item={item}
+      onRemovePressed={onRemovePressed}
+      toggleCompleted={toggleCompleted}
+    />
+  );
+  renderItem.propTypes = {
+    item: PropTypes.shape().isRequired,
+  };
+
+  Reactotron.log(`todos ${todos}`);
+
+  return (
+    <FlatList
+      style={styles.list}
+      renderItem={renderItem}
+      data={todos}
+      keyExtractor={item => `${item.id}`}
+    />
+  );
+};
 List.propTypes = {
   todos: PropTypes
     .arrayOf(PropTypes
