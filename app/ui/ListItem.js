@@ -9,9 +9,14 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginStart: 16,
-    marginEnd: 16,
-    marginBottom: 16,
+    padding: 16,
+    backgroundColor: '#F5FCFF',
+  },
+  itemSelected: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#EAEAEA',
   },
   text: {
     flex: 1,
@@ -32,7 +37,7 @@ const ListItem = ({ item, onRemovePressed, toggleCompleted }) => {
 
   const { text, isCompleted } = item;
   return (
-    <View style={styles.item}>
+    <View style={isCompleted ? styles.itemSelected : styles.item}>
       <Text style={styles.text}>{text}</Text>
       <CheckBox checked={isCompleted} onPress={this.toggleCompleted} />
       <TouchableOpacity onPress={this.onRemovePressed}>
