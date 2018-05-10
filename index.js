@@ -1,3 +1,4 @@
+/* eslint react/jsx-filename-extension: 0 */
 import React from 'react';
 import { AppRegistry, AsyncStorage } from 'react-native';
 import { createStore, applyMiddleware, compose } from 'redux';
