@@ -40,6 +40,8 @@ yarn-error.log
 buck-out/
 \.buckd/
 *.keystore
+*.keystore.old
+keystore.properties
 
 # fastlane
 #
@@ -57,3 +59,5 @@ buck-out/
 
 # .react in .vscode
 .vscode/.react
+
+add_keystore_vals_to_env.bash

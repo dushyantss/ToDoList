@@ -1,4 +1,4 @@
-package com.todolist;
+package com.dushyantss.reactnative.todolist;
 
 import android.app.Application;
 
